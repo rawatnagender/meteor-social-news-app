@@ -1,0 +1,85 @@
+<head>
+    <title>Social News</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-header">
+                    <a class="btn btn-success pull-right" href="/news/add" role="button">Add News</a>
+                    <h1><a href="/">Social News</a></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<template name="allNewsView">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                {{> imageView}}
+                <ul class="list-group">
+                    {{#each news}}
+                    {{> newsItem}}
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="newsItem">
+    <li class="list-group-item">
+        <a href="{{url}}" target="_blank">{{title}}</a>
+        <a href="/news/{{urlTitle}}" class="badge no-style">comments</a>
+    </li>
+</template>
+
+<template name="newsView">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <h1>{{title}}</h1>
+                <hr/>
+                <h2>Comments</h2>
+                <span>There will be some comments soon!</span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="addNews">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-4">
+                <div class="loginBtns">
+                    {{>loginButtons}}
+                </div>
+                {{#if currentUser}}
+                    <div class="form">
+                        <form class="addNewsForm">
+                            <input type="text" id="title" class="form-control" name="title" placeholder="Enter title"/> <br/>
+                            <input type="text" id="url" class="form-control" name="url" placeholder="Enter URL"/> <br/>
+                            <input type="file" name="image" class="myFileInput">
+                            <input type="submit" value="Add" class="btn btn-success btn-lg"/>
+                        </form>
+                    </div>
+                {{else}}
+                    <div>Please login to submit a news</div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<template name="imageView">
+  <div class="imageView">
+    {{#each images}}
+      <div>
+        <a href="{{this.url}}" target="_blank"><img src="{{this.url}}" alt="" class="thumbnail" /></a>
+      </div>
+    {{/each}}
+  </div>
+</template>
