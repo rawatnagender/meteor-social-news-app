@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-8 col-xs-offset-2">
-                {{> imageView}}
+                <!-- {{> imageView}} -->
                 <ul class="list-group">
                     {{#each news}}
                     {{> newsItem}}
@@ -31,6 +31,7 @@
 
 <template name="newsItem">
     <li class="list-group-item">
+        {{> imageView}}
         <a href="{{url}}" target="_blank">{{title}}</a>
         <a href="/news/{{urlTitle}}" class="badge no-style">comments</a>
     </li>
@@ -77,11 +78,12 @@
 
 
 <template name="imageView">
-  <div class="imageView">
-    {{#each images}}
-      <div>
-        <a href="{{this.url}}" target="_blank"><img src="{{this.url}}" alt="" class="thumbnail" /></a>
-      </div>
-    {{/each}}
-  </div>
+<!--   <div class="imageView">
+    <div> -->
+    {{#with images}}
+        <!-- <a href="{{this.url}}" target="_blank"><img src="{{this.url store='thumbs' uploading='/images/uploading.gif' storing='/images/storing.gif'}}" alt="" class="thumbnail" /></a> -->
+        <a href="{{url}}" target="_blank"><img src="{{url}}" alt="" class="thumbnail" /></a>
+    {{/with}}
+<!--     </div>
+  </div> -->
 </template>
