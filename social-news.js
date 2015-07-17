@@ -1,19 +1,25 @@
 News = new Mongo.Collection("news");
 
-// Meteor.startup(function(){
-//   process.env.MAIL_URL = smtp:nagi.rawat4@gmail.com:nrnrnene@smtp.gmail.com:587/
-// });
+Meteor.startup(function () {
+
+  smtp = {
+      username: 'nagi.rawat4',   // eg: server@gentlenode.com
+      password: 'nrnrnene',   // eg: 3eeP1gtizk5eziohfervU
+      server:   'smtp.gmail.com',  // eg: mail.gandi.net
+      port: 25
+    }
+    process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
 
 
-// Images = new FS.Collection("Images", {
-//   stores: [new FS.Store.FileSystem("Images", {path: "~/uploads"})]
-// });
-// Email.send({
-//   from: "nagi.rawat4@gmail.com",
-//   to: "nagi.rawat3@gmail.com",
-//   subject: "Meteor Can Send Emails via Gmail",
-//   text: "Its pretty easy to send emails via gmail."
-// });
+  });
+
+
+
+
+
+// // Images = new FS.Collection("Images", {
+// //   stores: [new FS.Store.FileSystem("Images", {path: "~/uploads"})]
+// // });
 
 Images = new FS.Collection("Images", {
     stores: [
@@ -32,6 +38,20 @@ Images = new FS.Collection("Images", {
     //   }
     // }
 });
+if (Meteor.isServer) {
+  Meteor.methods({
+    'sendEmail': function(){
+        Email.send({
+          from: "nagi.rawat4@gmail.com",
+          to: "nagi.rawat3@gmail.com",
+          subject: "News add mail",
+          text: "One news added to your app right now...please autheticate it... :)"
+        });
+    }
+  });
+
+}
+
 
 if (Meteor.isClient) {
 
@@ -85,9 +105,11 @@ if (Meteor.isClient) {
            }
          });
 
-         Router.go('news.all');
+        Meteor.call('sendEmail');
 
-         return false;
+        Router.go('news.all');
+
+        return false;
        }
     });
 }
